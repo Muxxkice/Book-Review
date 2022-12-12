@@ -1,23 +1,23 @@
-version: "3"
+version: '3'
 services:
-  #   db:
-  #     image: mysql:5.7
-  #     environment:
-  #       MYSQL_USER: user
-  #       MYSQL_ROOT_PASSWORD: password
-  #     ports:
-  #       - "3306:3306"
-  #     volumes:
-  #       - ./myapp/db/mysql:var/lib/mysql
-
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - "3306:3306"
+    volumes:
+      # - type: bind
+      #   source: "./Book-Review/db/mysql"
+      #   target: "var/lib/mysql"
+      -  ./Book-Review/db/mysql:/var/lib/mysql
   web:
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: zsh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
+      - .:/Book-Review
     ports:
       - "3000:3000"
     depends_on:
       - db
-# volumes:
-#   mysql_data:
